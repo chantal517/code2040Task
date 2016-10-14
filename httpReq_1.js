@@ -22,24 +22,23 @@ request(step4_url, data2, response, substring);
 var step5_url = 'http://challenge.code2040.org/api/dating';
 request(step5_url, data2, response, dateInterval);
 
-
+//Request function for connectingto the API and getting data from Endpoint
 function request(url, data, res, callback) {
   var xhr = new XMLHttpRequest();
   xhr.open("POST", url, true);
-
   xhr.setRequestHeader("Content-type", "application/json");
   xhr.onreadystatechange = function () {
     //make sure XMLHttpRequest is 'done' and good response from Endpoint
       if (xhr.readyState == 4 && xhr.status == 200) {
           res.val = xhr.responseText;
-          console.log(res.val);
           if(callback)
           callback(res.val);
       }
   };
   xhr.send(data);
 }
-//Function to reverse the String and post to Endpoint
+
+// Step 2 - Function to reverse the String and post to Endpoint
 function reverse(s){
   s = s.split("").reverse().join("");
   var url = 'http://challenge.code2040.org/api/reverse/validate';
@@ -47,6 +46,7 @@ function reverse(s){
   request(url, data, response);
 }
 
+//Step 3 - Function to find target string in list of strings
 function needleHay(data){
   var result = JSON.parse(data);
   var key = result.needle;
@@ -60,6 +60,7 @@ function needleHay(data){
   request(url, data, response);
 }
 
+//Step 4 - Function to find target substring in list of strings
 function substring(sub){
   var result = JSON.parse(sub);
   var nonSub =[];
@@ -74,6 +75,8 @@ function substring(sub){
   var data =JSON.stringify({"token":apikey, "array": nonSub});
   request(url, data, response);
 }
+
+//Fucntion for addind time interval to a Date
 
 function dateInterval(d){
   var result = JSON.parse(d);
